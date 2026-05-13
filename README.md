@@ -34,7 +34,7 @@ Ce projet est un CV interactif développé dans le cadre du module **Programmati
 
 ## 🔗 Liens
 - GitHub : https://github.com/Fatima1187
-- CV en ligne : https://fatima1187.github.io
+- CV en ligne :  https://fatima1187.github.io/projet-cv/
 - Projet AFC : https://fatimaouakkar925-ai.github.io/projet_web/
 - LinkedIn : https://www.linkedin.com/in/fatima-zahra-ouakkar-ab50263bb/
 
