@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CV interactif de Fatima Zahra Ouakkar - Étudiante en Sciences Informatiques à la FSSM Marrakech" />
+  <title>Fatima Zahra Ouakkar — CV Interactif</title>
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+
+  <style>
+   
+    :root {
+      --rose:       #c2185b;
+      --rose-light: #f48fb1;
+      --rose-pale:  #fce4ec;
+      --rose-deep:  #880e4f;
+      --dark:       #1a1020;
+      --dark-2:     #2d1f2d;
+      --mid:        #5c3d5c;
+      --text:       #3b2535;
+      --muted:      #9e7d9a;
+      --white:      #fff9fc;
+      --card-bg:    #fff0f5;
+      --border:     #f0c4d4;
+      --shadow:     0 4px 24px rgba(194,24,91,0.10);
+      --shadow-lg:  0 8px 48px rgba(194,24,91,0.16);
+      --radius:     16px;
+      --radius-sm:  8px;
+      --font-head:  'Playfair Display', serif;
+      --font-body:  'DM Sans', sans-serif;
+      --transition: 0.35s cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+   
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--rose-pale); }
+    ::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--rose-deep); }
+
+   
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--rose-light), transparent);
+      max-width: 100px;
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+   
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    section:nth-child(even) {
+      background: var(--rose-pale);
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: rgba(255,249,252,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all var(--transition);
+    }
+
+    nav.scrolled { 
+      box-shadow: var(--shadow);
+      padding: 0.6rem 1.5rem;
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      color: var(--rose-deep);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo:hover {
+      color: var(--rose);
+      transition: color var(--transition);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--mid);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      transition: all var(--transition);
+    }
+
+    .nav-links a:hover {
+      background: var(--rose);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .nav-links a.active {
+      background: var(--rose);
+      color: #fff;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--rose);
+      cursor: pointer;
+      transition: transform var(--transition);
+    }
+
+    .nav-toggle:hover {
+      transform: scale(1.1);
+    }
+
+   
+    #accueil {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 50%, #3d1f3d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #accueil::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 60% at 80% 50%, rgba(194,24,91,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(244,143,177,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-text { 
+      color: var(--white);
+      z-index: 1;
+    }
+
+    .hero-greeting {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose-light);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s forwards;
+    }
+
+    .hero-name span { 
+      color: var(--rose-light); 
+      font-style: italic;
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-name span::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--rose-light);
+      opacity: 0.3;
+    }
+
+    .hero-role {
+      font-size: 1.1rem;
+      color: rgba(255,249,252,0.8);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s forwards;
+    }
+
+    .hero-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.8s forwards;
+    }
+
+    .hero-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: rgba(255,249,252,0.7);
+      transition: all var(--transition);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.05);
+    }
+    .hero-contact-item i { 
+      color: var(--rose-light); 
+      font-size: 1rem;
+    }
+    .hero-contact-item:hover { 
+      color: var(--rose-light);
+      background: rgba(255,255,255,0.1);
+      transform: translateX(5px);
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--rose);
+      color: #fff;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all var(--transition);
+      opacity: 0;
+      animation: fadeUp 0.6s 1s forwards;
+      border: none;
+      cursor: pointer;
+    }
+    .hero-cta:hover {
+      background: var(--rose-deep);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(194,24,91,0.4);
+      gap: 1rem;
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 0.8s 0.5s forwards;
+    }
+
+    .hero-photo {
+      width: 300px;
+      height: 350px;
+      border-radius: 35% 65% 55% 45% / 45% 50% 50% 55%;
+      object-fit: cover;
+      border: 4px solid rgba(244,143,177,0.5);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      transition: transform var(--transition);
+    }
+
+    .hero-photo:hover {
+      transform: scale(1.02);
+    }
+
+    .hero-photo-placeholder {
+      width: 300px;
+      height: 350px;
+      border-radius: 35% 65% 55% 45% / 45% 50% 50% 55%;
+      background: linear-gradient(135deg, var(--rose-deep), var(--rose));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid rgba(244,143,177,0.5);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      gap: 0.8rem;
+    }
+    .hero-photo-placeholder i { 
+      font-size: 5rem; 
+      color: rgba(255,255,255,0.8);
+    }
+    .hero-photo-placeholder span { 
+      font-size: 0.8rem; 
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.1em;
+    }
+
+    @keyframes fadeUp { 
+      from { opacity:0; transform:translateY(30px); } 
+      to { opacity:1; transform:none; } 
+    }
+    @keyframes fadeIn { 
+      from { opacity:0; transform:scale(0.9); } 
+      to { opacity:1; transform:scale(1); } 
+    }
+
+   
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-bio {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.9;
+    }
+
+    .about-bio p { 
+      margin-bottom: 1.2rem;
+    }
+
+    .about-bio strong {
+      color: var(--rose-deep);
+    }
+
+    .about-interests {
+      margin-top: 2rem;
+    }
+
+    .about-interests h4 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--rose-deep);
+    }
+
+    .interest-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .tag {
+      background: var(--rose-pale);
+      border: 1px solid var(--border);
+      color: var(--rose-deep);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+    .tag:hover { 
+      background: var(--rose); 
+      color: #fff; 
+      transform: translateY(-3px);
+      border-color: var(--rose);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+    .stat-card:hover { 
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-number {
+      font-family: var(--font-head);
+      font-size: 2.5rem;
+      color: var(--rose);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+   
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 4rem;
+    }
+
+    .skill-item { 
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .skill-name i { 
+      color: var(--rose); 
+      font-size: 1rem;
+      width: 20px;
+    }
+
+    .skill-pct {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--rose);
+    }
+
+    .skill-bar-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 50px;
+      background: linear-gradient(90deg, var(--rose-light), var(--rose));
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    
+    .accordion-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+
+    .accordion-item:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: all var(--transition);
+    }
+
+    .accordion-header:hover { 
+      background: var(--rose-pale);
+    }
+
+    .accordion-header.open { 
+      background: var(--rose-pale);
+    }
+
+    .accordion-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .accordion-icon-wrap {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--rose-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+    .accordion-icon-wrap i { 
+      color: var(--rose); 
+      font-size: 1.2rem;
+    }
+
+    .accordion-title {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+
+    .accordion-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .accordion-chevron {
+      color: var(--rose);
+      font-size: 1rem;
+      transition: transform var(--transition);
+    }
+    .accordion-chevron.open { 
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      display: none;
+      padding: 0 2rem 1.8rem 2rem;
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.8;
+      border-top: 1px solid var(--border);
+    }
+
+    .accordion-body ul {
+      padding-left: 1.5rem;
+      list-style: disc;
+      margin-top: 0.8rem;
+    }
+
+    .accordion-body ul li { 
+      margin-bottom: 0.4rem;
+    }
+
+   
+    #projects-root {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    
+    #contact-root {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .contact-info-title {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .contact-info-text {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      padding: 0.8rem 1.2rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--white);
+      transition: all var(--transition);
+    }
+    .contact-link i { 
+      color: var(--rose); 
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .contact-link:hover {
+      border-color: var(--rose);
+      transform: translateX(6px);
+      box-shadow: var(--shadow);
+      background: var(--rose-pale);
+    }
+
+    
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    footer span { 
+      color: var(--rose-light);
+      font-weight: 600;
+    }
+
+    footer p:first-child {
+      margin-bottom: 0.5rem;
+    }
+
+    
+    @media (max-width: 968px) {
+      .hero-inner { 
+        grid-template-columns: 1fr; 
+        text-align: center; 
+        gap: 2rem;
+      }
+      .hero-contacts { 
+        justify-content: center;
+      }
+      .hero-photo-wrap { 
+        display: flex;
+        justify-content: center;
+      }
+      .hero-photo-placeholder,
+      .hero-photo {
+        width: 250px;
+        height: 300px;
+      }
+      .about-grid { 
+        grid-template-columns: 1fr; 
+        gap: 2rem;
+      }
+      .skills-grid { 
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      #contact-root { 
+        grid-template-columns: 1fr; 
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { 
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 100%; 
+        left: 0; 
+        right: 0; 
+        background: var(--white); 
+        padding: 1rem; 
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+        gap: 0.5rem;
+      }
+      .nav-links.open { 
+        display: flex;
+      }
+      .nav-toggle { 
+        display: block;
+      }
+      section { 
+        padding: 3rem 0;
+      }
+      .about-stats { 
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .stat-card {
+        padding: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1rem;
+      }
+      .about-stats { 
+        grid-template-columns: 1fr;
+      }
+      .accordion-header {
+        padding: 1rem;
+      }
+      .accordion-header-left {
+        gap: 0.8rem;
+      }
+      .accordion-icon-wrap {
+        width: 40px;
+        height: 40px;
+      }
+      .hero-contacts {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+ 
+  <nav id="main-nav">
+    <a href="#accueil" class="nav-logo">FZ. Ouakkar</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#formation">Formation</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+ 
+  <section id="accueil">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-greeting">
+            <i class="fas fa-star-of-life"></i> Bienvenue sur mon CV interactif
+          </p>
+          <h1 class="hero-name">Fatima Zahra<br><span>Ouakkar</span></h1>
+          <p class="hero-role">
+            <i class="fas fa-laptop-code"></i> Étudiante en Sciences Informatiques · FSSM Marrakech · S4 SINF
+          </p>
+
+          <div class="hero-contacts">
+            <a href="mailto:f.ouakkar1187@uca.ac.ma" class="hero-contact-item">
+              <i class="fas fa-envelope"></i>f.ouakkar1187@uca.ac.ma
+            </a>
+            <a href="https://github.com/Fatima1187" target="_blank" class="hero-contact-item">
+              <i class="fab fa-github"></i>GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/fatima-zahra-ouakkar-ab50263bb" target="_blank" class="hero-contact-item">
+              <i class="fab fa-linkedin"></i>LinkedIn
+            </a>
+          </div>
+
+          <a href="#projets" class="hero-cta">
+            <i class="fas fa-rocket"></i> Voir mes projets
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-placeholder">
+            <i class="fas fa-user-astronaut"></i>
+            <span>Fatima Zahra</span>
+            <span style="font-size:0.7rem">Future Dev Full Stack</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="apropos">
+    <div class="container">
+      <p class="section-label">
+        <i class="fas fa-user-circle"></i> À propos
+      </p>
+      <h2 class="section-title">Qui suis-je ?</h2>
+
+      <div class="about-grid">
+        <div class="about-bio">
+          <p>
+            👋 Je suis étudiante en <strong>Sciences Informatiques (SINF S4)</strong> à la 
+            <strong>Faculté des Sciences Semlalia de Marrakech</strong>. Passionnée par le 
+            développement web et les technologies numériques, je m'investis pleinement dans 
+            chaque projet pour allier rigueur technique et créativité.
+          </p>
+          <p>
+            💻 Au cours de mon parcours universitaire, j'ai développé un intérêt particulier 
+            pour la création de sites web modernes, la programmation orientée objet, 
+            le développement d'interfaces interactives et la découverte de nouvelles technologies.
+          </p>
+          <p>
+            🎯 Mon objectif professionnel est de devenir une <strong>développeuse full stack</strong> 
+            compétente, capable de concevoir des applications web complètes et performantes, 
+            tout en continuant à apprendre et à innover.
+          </p>
+
+          <div class="about-interests">
+            <h4><i class="fas fa-heart" style="color:var(--rose);margin-right:0.5rem;"></i>Centres d'intérêt</h4>
+            <div class="interest-tags">
+              <span class="tag"><i class="fas fa-book"></i> Lecture</span>
+              <span class="tag"><i class="fas fa-pencil-alt"></i> Design</span>
+              <span class="tag"><i class="fas fa-chart-line"></i> Trading</span>
+              <span class="tag"><i class="fas fa-microchip"></i> Tech</span>
+              <span class="tag"><i class="fas fa-globe"></i> Économie numérique</span>
+              <span class="tag"><i class="fas fa-music"></i> Musique</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">Projets réalisés</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">8</div>
+            <div class="stat-label">Technologies maîtrisées</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">S4</div>
+            <div class="stat-label">Niveau actuel</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">2026</div>
+            <div class="stat-label">Année universitaire</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="competences">
+    <div class="container">
+      <p class="section-label"><i class="fas fa-code"></i> Compétences</p>
+      <h2 class="section-title">Mes compétences techniques</h2>
+
+      <div class="skills-grid" id="skills-container">
+       
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="formation">
+    <div class="container">
+      <p class="section-label"><i class="fas fa-graduation-cap"></i> Formation</p>
+      <h2 class="section-title">Parcours académique</h2>
+
+      <div id="accordion-container">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-header-left">
+              <div class="accordion-icon-wrap"><i class="fas fa-university"></i></div>
+              <div>
+                <div class="accordion-title">Licence Sciences Informatiques — SINF S4</div>
+                <div class="accordion-subtitle">2023 – Présent · Faculté des Sciences Semlalia, Marrakech</div>
+              </div>
+            </div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <p>Formation complète en Sciences Informatiques à la FSSM de Marrakech (Université Cadi Ayyad).</p>
+            <ul>
+              <li>Programmation orientée objet (C++, Java)</li>
+              <li>Développement Web Front-end et Back-end</li>
+              <li>Bases de données relationnelles (SQL, Oracle)</li>
+              <li>Structures de données et algorithmique avancée</li>
+              <li>Systèmes d'exploitation et réseaux</li>
+              <li>Mathématiques pour l'informatique</li>
+              <li>Génie logiciel et méthodologies agiles</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-header-left">
+              <div class="accordion-icon-wrap"><i class="fas fa-school"></i></div>
+              <div>
+                <div class="accordion-title">Baccalauréat en Sciences Physiques</div>
+                <div class="accordion-subtitle">2023 · Lycée Razi, Marrakech</div>
+              </div>
+            </div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <p>Baccalauréat obtenu en Sciences Physiques avec mention, filière scientifique.</p>
+            <ul>
+              <li>Mathématiques approfondies</li>
+              <li>Physique-Chimie expérimentale</li>
+              <li>Sciences de la vie et de la Terre</li>
+              <li>Philosophie des sciences</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="projets">
+    <div class="container">
+      <p class="section-label"><i class="fas fa-rocket"></i> Réalisations</p>
+      <h2 class="section-title">Mes projets marquants</h2>
+      <div id="projects-root"></div>
+    </div>
+  </section>
+
+ 
+  <section id="contact">
+    <div class="container">
+      <p class="section-label"><i class="fas fa-paper-plane"></i> Contact</p>
+      <h2 class="section-title">Restons en contact</h2>
+      <div id="contact-root"></div>
+    </div>
+  </section>
+
+ 
+  <footer>
+    <p>© 2026/2027 — <span>Fatima Zahra Ouakkar</span> · Étudiante SINF S4 · FSSM Marrakech</p>
+    <p>Conçu avec <span>♥</span> · HTML5 · CSS3 · jQuery · ReactJS · Responsive Design</p>
+  </footer>
+
+ 
+  <script>
+    $(function () {
+      // Navigation scroll effect
+      $(window).on('scroll', function () {
+        if ($(this).scrollTop() > 50) {
+          $('#main-nav').addClass('scrolled');
+        } else {
+          $('#main-nav').removeClass('scrolled');
+        }
+
+        // Active link highlighting
+        $('section').each(function () {
+          const top = $(this).offset().top - 100;
+          const bottom = top + $(this).outerHeight();
+          const scrollY = $(window).scrollTop();
+          if (scrollY >= top && scrollY < bottom) {
+            const id = $(this).attr('id');
+            $('.nav-links a').removeClass('active');
+            $(`.nav-links a[href="#${id}"]`).addClass('active');
+          }
+        });
+      });
+
+      // Mobile navigation toggle
+      $('#nav-toggle').on('click', function () {
+        $('#nav-links').toggleClass('open');
+        $(this).find('i').toggleClass('fa-bars fa-times');
+      });
+
+      // Close mobile nav on link click
+      $('.nav-links a').on('click', function () {
+        $('#nav-links').removeClass('open');
+        $('#nav-toggle').find('i').removeClass('fa-times').addClass('fa-bars');
+      });
+
+      // Smooth scroll for anchor links
+      $('a[href^="#"]').on('click', function (e) {
+        e.preventDefault();
+        const target = $(this.hash);
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: target.offset().top - 70
+          }, 800);
+        }
+      });
+
+      // Skills data with updated values
+      const skills = [
+        { name: 'HTML5/CSS3', icon: 'fa-brands fa-html5', pct: 85 },
+        { name: 'JavaScript (ES6+)', icon: 'fa-brands fa-js', pct: 75 },
+        { name: 'ReactJS', icon: 'fa-brands fa-react', pct: 65 },
+        { name: 'jQuery', icon: 'fa-solid fa-code', pct: 70 },
+        { name: 'C++ / POO', icon: 'fa-solid fa-terminal', pct: 70 },
+        { name: 'SQL / Bases de données', icon: 'fa-solid fa-database', pct: 75 },
+        { name: 'Git & GitHub', icon: 'fa-brands fa-github', pct: 65 },
+        { name: 'Responsive Design', icon: 'fa-solid fa-mobile-alt', pct: 80 }
+      ];
+
+      const $container = $('#skills-container');
+      skills.forEach(s => {
+        $container.append(`
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name"><i class="${s.icon}"></i> ${s.name}</span>
+              <span class="skill-pct">${s.pct}%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-pct="${s.pct}"></div>
+            </div>
+          </div>
+        `);
+      });
+
+      // Animate skill bars on scroll
+      let skillsAnimated = false;
+
+      function animateSkills() {
+        if (skillsAnimated) return;
+        const sectionTop = $('#competences').offset().top;
+        const scrollBottom = $(window).scrollTop() + $(window).height();
+        if (scrollBottom > sectionTop + 100) {
+          skillsAnimated = true;
+          $('.skill-bar-fill').each(function () {
+            const pct = $(this).data('pct');
+            $(this).animate({ width: pct + '%' }, { duration: 1200, easing: 'swing' });
+          });
+        }
+      }
+
+      $(window).on('scroll', animateSkills);
+      animateSkills();
+
+      // Accordéon Formation
+      $('.accordion-header').on('click', function () {
+        const $item = $(this).closest('.accordion-item');
+        const $body = $item.find('.accordion-body');
+        const $chevron = $(this).find('.accordion-chevron');
+        const isOpen = $body.is(':visible');
+
+        if (!isOpen) {
+          $('.accordion-body').slideUp(300);
+          $('.accordion-chevron').removeClass('open');
+          $('.accordion-header').removeClass('open');
+          
+          $body.slideDown(300);
+          $chevron.addClass('open');
+          $(this).addClass('open');
+        } else {
+          $body.slideUp(300);
+          $chevron.removeClass('open');
+          $(this).removeClass('open');
+        }
+      });
+    });
+  </script>
+
+ 
+  <script type="text/babel">
+    const { useState } = React;
+
+    // ProjectCard Component
+    function ProjectCard({ title, type, description, technologies, link, linkLabel, icon }) {
+      const [hovered, setHovered] = useState(false);
+
+      return (
+        <div
+          style={{
+            background: '#fff9fc',
+            border: `1px solid ${hovered ? '#c2185b' : '#f0c4d4'}`,
+            borderRadius: '16px',
+            padding: '1.8rem',
+            boxShadow: hovered ? '0 12px 40px rgba(194,24,91,0.2)' : '0 4px 24px rgba(194,24,91,0.08)',
+            transform: hovered ? 'translateY(-8px)' : 'none',
+            transition: 'all 0.35s cubic-bezier(.4,0,.2,1)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{
+              width: '54px',
+              height: '54px',
+              borderRadius: '14px',
+              background: 'linear-gradient(135deg, #fce4ec, #f8bbd9)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.6rem',
+              color: '#c2185b',
+            }}>
+              <i className={icon}></i>
+            </div>
+            <span style={{
+              fontSize: '0.7rem',
+              fontWeight: '700',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: '#c2185b',
+              background: '#fce4ec',
+              padding: '0.3rem 0.8rem',
+              borderRadius: '50px',
+            }}>{type}</span>
+          </div>
+
+          <h3 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: '1.3rem',
+            color: '#1a1020',
+            lineHeight: '1.3',
+            marginTop: '0.5rem',
+          }}>{title}</h3>
+
+          <p style={{ fontSize: '0.88rem', color: '#5c3d5c', lineHeight: '1.7', flex: 1 }}>
+            {description}
+          </p>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+            {technologies.map((tech, i) => (
+              <span key={i} style={{
+                fontSize: '0.75rem',
+                fontWeight: '500',
+                background: '#f8bbd9',
+                color: '#880e4f',
+                padding: '0.25rem 0.8rem',
+                borderRadius: '50px',
+              }}>{tech}</span>
+            ))}
+          </div>
+
+          {link && (
+            <a href={link} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              background: hovered ? '#c2185b' : '#fce4ec',
+              color: hovered ? '#fff' : '#c2185b',
+              padding: '0.7rem 1.3rem',
+              borderRadius: '50px',
+              transition: 'all 0.3s',
+              alignSelf: 'flex-start',
+              marginTop: '0.5rem',
+            }}>
+              <i className="fas fa-external-link-alt"></i> {linkLabel || 'Voir le projet'}
+            </a>
+          )}
+        </div>
+      );
+    }
+
+    // Projects App
+    function ProjectsApp() {
+      const projects = [
+        {
+          title: 'Site web AFC',
+          type: 'Site vitrine',
+          description: 'Présentation d\'une marque artistique avec des pages structurées, un design moderne et une mise en page responsive adaptée à tous les écrans. Utilisation de techniques modernes de CSS.',
+          technologies: ['HTML5', 'CSS3', 'JavaScript'],
+          link: 'https://fatimaouakkar925-ai.github.io/projet_web/',
+          linkLabel: 'Découvrir le site',
+          icon: 'fas fa-globe',
+        },
+        {
+          title: 'Amanat Marrakech: The Lost Relics',
+          type: 'Jeu vidéo 2D',
+          description: 'Jeu d\'aventure 2D développé en C++ avec la bibliothèque SFML. Intégration complète de la programmation orientée objet, gestion des collisions avancée, système de score et niveaux progressifs.',
+          technologies: ['C++', 'SFML', 'POO', 'Algorithmie'],
+          link: 'https://github.com/Fatima1187',
+          linkLabel: 'Voir sur GitHub',
+          icon: 'fas fa-gamepad',
+        },
+        {
+          title: 'Portfolio Personnel',
+          type: 'Application Web',
+          description: 'Création d\'un portfolio interactif avec ReactJS et CSS moderne. Mise en place d\'animations fluides, formulaire de contact fonctionnel et design responsive.',
+          technologies: ['ReactJS', 'CSS3', 'JavaScript ES6'],
+          link: '#',
+          linkLabel: 'En cours',
+          icon: 'fas fa-user',
+        }
+      ];
+
+      return (
+        <>
+          {projects.map((p, index) => (
+            <ProjectCard key={index} {...p} />
+          ))}
+        </>
+      );
+    }
+
+    // Contact Form Component
+    function ContactForm() {
+      const [form, setForm] = useState({ name: '', email: '', message: '' });
+      const [errors, setErrors] = useState({});
+      const [submitted, setSubmitted] = useState(false);
+
+      const validate = () => {
+        const newErrors = {};
+        if (!form.name.trim()) newErrors.name = 'Le nom est requis';
+        if (!form.email.trim()) {
+          newErrors.email = 'L\'email est requis';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+          newErrors.email = 'Format d\'email invalide';
+        }
+        if (!form.message.trim()) newErrors.message = 'Le message est requis';
+        return newErrors;
+      };
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name]: value }));
+        if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+      };
+
+      const handleSubmit = () => {
+        const newErrors = validate();
+        if (Object.keys(newErrors).length > 0) {
+          setErrors(newErrors);
+          return;
+        }
+        setSubmitted(true);
+      };
+
+      if (submitted) {
+        return (
+          <div style={{
+            background: '#fce4ec',
+            border: '2px solid #f48fb1',
+            borderRadius: '16px',
+            padding: '2.5rem',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📧</div>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', color: '#880e4f', marginBottom: '0.5rem' }}>
+              Message envoyé !
+            </h3>
+            <p style={{ color: '#5c3d5c', fontSize: '0.95rem' }}>
+              Merci <strong>{form.name}</strong>, votre message a bien été reçu.<br/>
+              Je vous répondrai dans les plus brefs délais.
+            </p>
+            <button
+              onClick={() => { setForm({ name: '', email: '', message: '' }); setSubmitted(false); }}
+              style={{
+                marginTop: '1.5rem',
+                background: '#c2185b',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '50px',
+                padding: '0.8rem 2rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                fontSize: '0.9rem',
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
+              onMouseLeave={(e) => e.target.style.transform = 'none'}
+            >
+              Envoyer un autre message
+            </button>
+          </div>
+        );
+      }
+
+      return (
+        <div style={{
+          background: '#fff9fc',
+          border: '1px solid #f0c4d4',
+          borderRadius: '16px',
+          padding: '2rem',
+          boxShadow: '0 4px 24px rgba(194,24,91,0.08)',
+        }}>
+          <div style={{ marginBottom: '1.2rem' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: '600', color: '#5c3d5c', display: 'block', marginBottom: '0.4rem' }}>
+              Nom complet *
+            </label>
+            <input
+              name="name"
+              type="text"
+              placeholder="Votre nom complet"
+              value={form.name}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.85rem',
+                border: `2px solid ${errors.name ? '#c2185b' : '#f0c4d4'}`,
+                borderRadius: '10px',
+                fontSize: '0.9rem',
+                outline: 'none',
+                transition: 'border-color 0.3s',
+              }}
+            />
+            {errors.name && <p style={{ color: '#c2185b', fontSize: '0.75rem', marginTop: '0.3rem' }}>{errors.name}</p>}
+          </div>
+
+          <div style={{ marginBottom: '1.2rem' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: '600', color: '#5c3d5c', display: 'block', marginBottom: '0.4rem' }}>
+              Email *
+            </label>
+            <input
+              name="email"
+              type="email"
+              placeholder="votre@email.com"
+              value={form.email}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.85rem',
+                border: `2px solid ${errors.email ? '#c2185b' : '#f0c4d4'}`,
+                borderRadius: '10px',
+                fontSize: '0.9rem',
+                outline: 'none',
+              }}
+            />
+            {errors.email && <p style={{ color: '#c2185b', fontSize: '0.75rem', marginTop: '0.3rem' }}>{errors.email}</p>}
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: '600', color: '#5c3d5c', display: 'block', marginBottom: '0.4rem' }}>
+              Message *
+            </label>
+            <textarea
+              name="message"
+              rows="4"
+              placeholder="Votre message..."
+              value={form.message}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.85rem',
+                border: `2px solid ${errors.message ? '#c2185b' : '#f0c4d4'}`,
+                borderRadius: '10px',
+                fontSize: '0.9rem',
+                outline: 'none',
+                resize: 'vertical',
+              }}
+            />
+            {errors.message && <p style={{ color: '#c2185b', fontSize: '0.75rem', marginTop: '0.3rem' }}>{errors.message}</p>}
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            style={{
+              width: '100%',
+              background: 'linear-gradient(135deg, #c2185b, #880e4f)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '50px',
+              padding: '1rem',
+              fontSize: '1rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.boxShadow = '0 8px 24px rgba(194,24,91,0.35)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'none';
+              e.target.style.boxShadow = 'none';
+            }}
+          >
+            <i className="fas fa-paper-plane"></i> Envoyer le message
+          </button>
+        </div>
+      );
+    }
+
+    // Contact Info Component
+    function ContactInfo() {
+      return (
+        <div>
+          <h3 className="contact-info-title">Parlons ensemble</h3>
+          <p className="contact-info-text">
+            Je suis ouverte à toute opportunité de stage, collaboration ou échange autour
+            du développement web. N'hésitez pas à me contacter pour discuter de vos projets !
+          </p>
+          <div className="contact-links">
+            <a href="mailto:f.ouakkar1187@uca.ac.ma" className="contact-link">
+              <i className="fas fa-envelope"></i>
+              f.ouakkar1187@uca.ac.ma
+            </a>
+            <a href="https://github.com/Fatima1187" target="_blank" rel="noopener noreferrer" className="contact-link">
+              <i className="fab fa-github"></i>
+              github.com/Fatima1187
+            </a>
+            <a href="https://www.linkedin.com/in/fatima-zahra-ouakkar-ab50263bb" target="_blank" rel="noopener noreferrer" className="contact-link">
+              <i className="fab fa-linkedin"></i>
+              LinkedIn - Fatima Zahra Ouakkar
+            </a>
+          </div>
+        </div>
+      );
+    }
+
+    // Contact App
+    function ContactApp() {
+      return (
+        <>
+          <ContactInfo />
+          <ContactForm />
+        </>
+      );
+    }
+
+    // Mount React applications
+    const projectsContainer = document.getElementById('projects-root');
+    if (projectsContainer) {
+      const root = ReactDOM.createRoot(projectsContainer);
+      root.render(<ProjectsApp />);
+    }
+
+    const contactContainer = document.getElementById('contact-root');
+    if (contactContainer) {
+      const root = ReactDOM.createRoot(contactContainer);
+      root.render(<ContactApp />);
+    }
+  </script>
+
+</body>
+</html>
